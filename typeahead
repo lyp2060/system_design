@@ -1,0 +1,32 @@
+typeahead 带来巨幅提升， 自动提升功能
+
+数据库放在硬盘里，实际上会加上一个cache 进行提高速度
+
+tire 只能存在内存里，不能存在银盘里
+
+cache+DB： 会存在cache Miss
+
+实际中用tire 来处理
+
+log data每秒都在增加，如何降低日志的量？
+用一个random值来更新，如果random在1-1000,每次取到1 时，才更新日志。 更新的概率变成 1/1000
+
+
+统计的过程是过一段时间统计一次， 比如一周或者2周统计一次
+
+如何更新正在使用的querySevice ？
+要把内存里的数据序列化，防止没电后， 内存里的东西没了
+可以进行拷贝，用2 个querySevice
+
+在前段做文章，在javaScript 里加上对象
+tire 可以分开存成不同的表
+每次字母存一个机器
+  有严重的bias,Z开头的单词可能很少
+用hash 存。把单词hash话。然后去hash过的机器取值
+
+latter:
+url-parser
+implement-trie
+trie-serialization
+typeahead
+webpage-crawler
