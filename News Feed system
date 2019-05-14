@@ -1,0 +1,49 @@
+90% is web system
+多线程： 生产者 消费者 --》 snapchat
+
+可行性： work soultion 25%
+特定问题： special case 20%
+分析能力： Analysis 25%
+权衡： tradeoff 15%
+知识储备 knowledge base 15%
+
+4S
+scenario:
+  Ask, features, QPS, DAU , Interface
+service
+storage
+scale 
+
+问的最多的是怎么sharding 数据
+storage 这一部分最重要
+
+QPS：300K:
+queries per second
+日活跃 * 每个用户平均请求次数/一天多少秒 = 150M *60/86400~100K 
+
+peak：  = average concurent users *3---> 300k 
+
+快速增长的产品：
+  max peak users in 3 months = peak users *2
+  
+分析写多还是读多
+
+QPS = 100：用你的笔记本做web 服务器就好了
+QPS = 1K: 好点的服务器
+QPS = 1m : 1000台服务器集群，需要考虑挂了一台怎么办，上load balancer 
+
+web server: 1K QPS
+one SQL database: 1 K QPS  (if need to join and index query, this number will be much less)
+No SQL database （Cassandra）10K QPS 
+NO SQL dataase (Memcached) 1 M 
+
+数据库是什么，怎么用， 一定要会
+
+merge k sorted array--- > k logk 
+
+异步系统都用到msg queue, 里面存了一些task 
+zero m queue, ali queue, kaflar
+
+msg queue 存在内存或者 文件里，都有可能有
+redies 也可以做msg queue. 是个生产者消费者模型
+
