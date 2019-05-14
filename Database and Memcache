@@ -1,0 +1,55 @@
+查询功能是用的最多的
+
+注册时写请求
+登入， 有时候是写请求，确定上次是什么时候登入的
+
+QPS 决定存储系统的选择
+
+mySQL:1K QPS. 实际中100 左右
+
+mongoDB/Casssandra: 10K QPS 
+
+Redis--》 支持数据持久化
+Memcached: 100k-1m QPS ---》 断电了就没了
+ 基于内存，只能给定ID，才能给结果
+ 
+ 
+ 
+ 一个读多写少的系统，一定要用cache 进行优化
+ 
+ browser cache:
+ cookie 不是cache, 每次request网站，都会查cookie, 会越来越慢
+ 静态文件的cache , 比如说图片
+ 
+ memcached:
+ 一款负责帮你cache在内存里的软件，非常广泛使用在数据库系统中
+ 
+ cache 有ttl, 有淘汰机制
+ 
+ A: database.set(user), cache.set(key,user)： if database失败，cache 里会有脏数据
+ B: cache.set(key,user), database.set(user)： same as A
+ C:cache.delete(key,user),database.set(user)， sometimeuse, no dirty data 
+ D: database.set(user),cache.delete(key,user), will have dirty data  if cannt delete cache 
+ 
+ 严格说都错, C 中，当同时有很多用户访问database, 会出现race condition
+ 要
+ 
+ database, cache, web service 可能在3 个机器上
+ 
+ session table 存在serve端， 
+ session_key, user_id, expire_at (默认3个月过期）
+ 
+ session key 返回给浏览器，浏览器存在cookie 中， 一个用户有时候session 有多个，可能在safali 登入，也在chrome登入
+ 
+ session_table 存在缓存，或者数据库 （--》比较多，但要用cache去优化）
+ 
+ redis： cache thru 
+ web server -> cache-->DB
+ 
+ cache aside: 
+ web server -> cache
+          --->DB
+ 
+ 
+ 
+ 
