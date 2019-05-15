@@ -60,5 +60,38 @@ index可以帮助快速查询，index 最后怎么实现？用的是tree 做inde
 cassandra: 三层结构
 row_key: hash_key, 查询必须带上key, 无法进行range query 
 column_key:是排序的，可以进行range query, 可以是复合值，比如timestamp+user_id 
-value 
+value: 一般来说是string, 如果需要存很多信息，自己serialization 
+
+SQL, 规定好，需要migration 
+一条数据以行单位
+row1, id, username, emial, password, first_name etc
+NO SQL: 以grid 为单位
+
+sharding:
+数据拆分，按照一定的规则，将数据拆分为不同的部分，保存在不同的机器上
+这样就算挂，也不会网站100%挂掉
+
+数据备份 replica:
+一式三份
+同时能分担读请求
+
+SQL： 自身不带sharding
+NOSQL: 自带sharding 
+
+vertical sharding:
+user table 放一台， 放SQL里，信任度？ mySQL 很成熟，mongoDB 曾经丢过数据？ 经常需要filter username?==? email ===? 这些用SQL更好，secondary Index
+friendship tabel 放一台
+message table 放一台 ETC
+缺点：
+一个表可能很大
+
+horizontal sharding ： 考的核心
+方法1： 简单粗暴，直接奇偶数，或者%10， 问题：机器数目经常变化，比如现在10台机器，然后变成11台，这样取模结果变化非常大，会造成数据大迁移
+
+
+问题：
+usertable, sharding 成 db1, db2, db3 （对user ID %3）,怎么可以查一个用户的email? 
+建立一个新的表，只有2个内容： email to ID, 然后通过ID来查数据库，这个表也是一个DB，因为信息量很小，可以很快查询，可以cache 起来
+
+
 
