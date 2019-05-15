@@ -47,3 +47,18 @@ zero m queue, ali queue, kaflar
 msg queue 存在内存或者 文件里，都有可能有
 redies 也可以做msg queue. 是个生产者消费者模型
 
+editThisCookie
+好友关系经常考
+方案1： 存为2条信息， A--》 B, B--》A
+方案2： 存为一条信息，但查询慢一点
+
+什么是transaction? 给你10块钱，你的加10,我得少10， transaction, no SQL 不支持
+NOSQL的数据可能不在同一台机器上，这样无法lock 
+
+index可以帮助快速查询，index 最后怎么实现？用的是tree 做index, 
+
+cassandra: 三层结构
+row_key: hash_key, 查询必须带上key, 无法进行range query 
+column_key:是排序的，可以进行range query, 可以是复合值，比如timestamp+user_id 
+value 
+
