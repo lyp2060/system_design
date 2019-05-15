@@ -1,0 +1,17 @@
+1. %一个很大的数，比如 360， 一份为2 180-359， 存一个DB， 另一份 0-179 为另一份
+2： 一劈为二，讲大的环分2半，可能数据不均匀
+  数据不均匀，负载不均衡，容易挂
+  迁移时的压力很大，新的数据只从老的2台数据取，导致2台老的机器过载
+  
+3： 更实用的方法
+  讲整个hahs q区间看做环
+  环大小为2**64-1
+  将机器和数据看做换上的一个点
+  因为micro shards/virtual nodes, 一台实体机器对应1000个micro shards/virtual nodes
+  每个virtual node对应环上一个点
+  每次加入一台机器，就在换上随机撒1000个点为virtual nodes
+  需要计算某个row key 所在服务器
+   计算该key 的hash 值，
+   顺时针找到第一个virtual node
+   该virtual nodde 所在机器就是key 所在数据服务器
+    新加入一台机器做数据迁移时，1000个virtual node各自向顺时针的一个virtual node要数据
