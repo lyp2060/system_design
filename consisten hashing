@@ -15,3 +15,5 @@
    顺时针找到第一个virtual node
    该virtual nodde 所在机器就是key 所在数据服务器
     新加入一台机器做数据迁移时，1000个virtual node各自向顺时针的一个virtual node要数据
+
+1000这个数，如果太大，算起来太慢，如何快速找到顺时针的下一个环？ （用红黑树）
