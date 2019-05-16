@@ -1,0 +1,56 @@
+主要是twitter/weibo 有字节限制，所以有功能优化长网页地址变成很短的地址
+
+2KQPS 一台SSD支持的mySQL可以搞定
+
+流量不大
+
+301,302 跳转
+
+单独通过解密算法实时解，不太现实
+
+L --》 S
+
+一个short 只能对应一个long 
+
+一个long 可能对应多个short，这样可能不需要先查询是否已经存在，比较简单，需要和spec确认
+
+short URL 要回收吗？ 
+实际上，他们处于节省空间的问题，他们回收了
+
+算法1 
+Base62
+将6位的short url 看成一个62进制数 （0-9，a-z, A_Z）
+每个short url 对应到一个整数
+该整数对应数据库表的primary key 
+缺点：依赖sequential ID 
+不完全随机，容易被破解？ 
+
+SQL: 支持transation （NOSQL没有）
+SQL: 支持sequency ID (NOSQL 没有）， 相当于行号
+
+算法2 
+hash function 不可行：
+很难设计一个不冲突的算法
+
+算法3
+随机生成一个shortURL，如果不存在，就使用
+缺点：当网址越来越多，会变慢，但可以用cache来提速度
+
+常用的场景：登记的confirmation number
+
+how to reduce responce time
+主要是优化读，因为读比较快，
+利用cache aslide
+地理位置进行提速，不同的地区，使用不同的web 服务器，
+DNS 可以提供动态解析，不同的地点解析到不同的web服务器
+数据库可以根据地理位置进行sharding
+
+给的short URL,如何分辨在哪个服务器，可以用第一位来分 0/1
+
+horizontal sharding
+short to long 查询比较多，不能按照long url 来做sharding key 
+
+custom table怎么存需要custom URL
+
+怎么回收？ SQL,支持TTL，可以使用这个方法
+
