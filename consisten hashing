@@ -16,4 +16,22 @@
    该virtual nodde 所在机器就是key 所在数据服务器
     新加入一台机器做数据迁移时，1000个virtual node各自向顺时针的一个virtual node要数据
 
-1000这个数，如果太大，算起来太慢，如何快速找到顺时针的下一个环？ （用红黑树）
+1000这个数，如果太大，算起来太慢，如何快速找到顺时针的下一个环？ （用红黑树）, 
+也可以排序，二分查找，前提是没用动态加减机器，而且不在mem chache里
+
+
+replica: 热备份， 实时备份
+backup: 冷备份，周期性的
+
+replica:
+
+mysql: 提供master- slave 方式replica, master ---> slave 1
+                                            ----> slave 2
+write ahead log 进行同步，都会以log方式进行记录，slave上可能有些延时，如果需要最新的数据，去master读，不一致性在很短一段时间是可以接受的
+
+SQL： 自带的replica方式是master-slave
+手动的replica方式也可以在consistent hashing 环上顺时针存三份
+
+NOSQL：自带的replica方式就是consistent hashing 环上顺时针存三份
+手动的replica方式：就不需要手动了， NOSQL就是帮你偷懒
+
