@@ -1,0 +1,10 @@
+Master Slave Pattern 
+
+GFS: google file system (Google), not open source (C++)
+HDFS: Yahoo(Alitaba) open source of GFS, open source (Java)
+---> Hadoop Distributd File System :很多分手
+
+How to check and handle system failure and error
+
+How to design Distributed File System
+
