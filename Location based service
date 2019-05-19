@@ -1,0 +1,49 @@
+google s2:
+把经纬度2位坐标转成1位坐标，这样1位坐标的位置远近可以直接反馈到2纬坐标
+
+1phase:
+  driver report locations--->这个请求多点
+  riders request uber, match a driver with rider
+  
+
+2 phase:
+  driver deny/accept a request
+  driver cacel a matched request
+  rider cancel a request
+  driver pick up a rider/start a trip
+  driver drop off a rider/end a trip
+3 phase:
+  uber pool
+  uber eat
+  
+ 1phase: poll, 轮询
+ dispatch web server， 写多
+ 
+ geo web server: trip table: 读多， 所有的写操作都是人触发的
+ 
+ SQL： index有哪几种？
+ 
+ 难点：
+ 如何存储和查询地理位置信息？如：1公里内的司机
+ 
+ 1秒内有没有人理我，2秒内有没有人理我。。。。
+ 
+ schema里存的是经纬度
+ 
+以下太复杂，太多逻辑运算
+ select * FROM Location
+ WHERE lat<mylat +delta
+  AND lat<mylat-delta
+  AND Ing<myLng+delta
+  AND lng>myLng-delta
+  
+ schema实现方式
+ B+tree index：（相当于tree map， o(h)）
+ hash index：hash不支持range query, 如： mylat+delta， 速度快 o(1)
+ 
+ 
+ 
+ 
+  
+ 
+ 
