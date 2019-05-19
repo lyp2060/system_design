@@ -11,7 +11,7 @@ steps:
 step1 input
 step2 split
 step3 map, 输出到硬盘里，并没有直接输出在内存里，只统计了每个此时，可能出来a:1,b：1，a:1
-step4 transmit
+step4 transmit：partition sort--》Fetch+Merge Sort 
 setp5:reduce
 step6:output
 
@@ -43,3 +43,15 @@ public class WordCount {
   }
  }
 }
+
+没有用Hash表来存，是因为value可能很大，这样都存在内存中， 内存可能爆掉
+
+map 多少台机器，reduce 多少台机器
+--全由自己决定，一般1000map,1000reduce 规模
+
+机器越多越好？
+---NO，分配启动都需要占用时间
+
+如果不考虑启动时间，reduce机器越多越好吗？
+--NO,reduce看key 的个数，如果只有300个单词，给了500机器，后面的200机器在闲置
+
