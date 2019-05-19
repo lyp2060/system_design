@@ -58,5 +58,6 @@ map 多少台机器，reduce 多少台机器
 input and output, where to store them?
 place them in GFS
 
-
-
+硬盘读写速度和内存速度差50倍，价格差50倍
+spark 放在内存里，最近比较火
+bitCome, cassendra这两个系统用P to p，others, moslty use master-slave
