@@ -55,3 +55,8 @@ map 多少台机器，reduce 多少台机器
 如果不考虑启动时间，reduce机器越多越好吗？
 --NO,reduce看key 的个数，如果只有300个单词，给了500机器，后面的200机器在闲置
 
+input and output, where to store them?
+place them in GFS
+
+
+
