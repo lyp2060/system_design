@@ -1,0 +1,45 @@
+map reduce:
+data--> machine1 -（通过consistency hash来实现传输）->machine3 --->输出到文件夹，里面的文件名为output00-of-02 and output01-of-02
+    --> machine2 ---> machine4---> 
+    
+这样可以分布式计算
+
+Map： 机器1,2只负责拆分
+reduce:但单词次数合并在一起
+
+steps:
+step1 input
+step2 split
+step3 map, 输出到硬盘里，并没有直接输出在内存里，只统计了每个此时，可能出来a:1,b：1，a:1
+step4 transmit
+setp5:reduce
+step6:output
+
+map 输入：
+key, value 形式
+key:文章存储地址,value:文章内容
+
+reduce 输入：
+key: map 输出的key
+value:map 输出的value 
+
+public class WordCount {
+  public static class Map {
+    public void map(String key, string value, OutputCollector<String, Integer> output) {
+      StringTokenizer tokenizer = new StringTokenizer(value);
+      while (tokenizer.hasMoreTokens()) {
+        String word =tokenizer.nextToken();
+        output.collect(word,1);
+      }
+    }
+ }
+ public static class Reduce {
+  public void reduce(String key, Iterator<Integer> value, OutputCollector<String, Integer> output) {
+    int sum = 0
+    while (values.hasNext()) {
+      sum+= values.next();
+    }
+    output.collect(key,sum);
+  }
+ }
+}
