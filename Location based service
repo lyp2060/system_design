@@ -41,6 +41,33 @@ google s2:
  B+tree index：（相当于tree map， o(h)）
  hash index：hash不支持range query, 如： mylat+delta， 速度快 o(1)
  
+ google S2:更精确，库函数更丰富
+ Geohash: 比较简单，准确度差点
+  画格子,为什么横着格子没有竖的多？因为经度-180->180,维度是-90-90
+  
+ 为什么4*8个格子?
+ 0-9，a-z（except a,i,l,o）正好32个数字，核心思路二分法
+ 用户阅读的感受，因为l,o，容易和l,0,混淆,如验证码
+ 特性：公共前缀越长，两个点越接近
+ 
+ 怎么在数据库中查询以某些字符串开头的字符？
+ mySql,like query , 
+  SELECT * FROM location WHERE geohash LIKE'9q9hv%'
+  
+ NOSQL:
+ driver位置： 9q9hvt,则存储在9q9hvt, 9q9hv, 9q9h这3个key钟
+ 
+ Redis, NOSQL popular
+ 原生支持list, set 等结构
+ 
+ 可是redis经常会挂掉，后来uber放弃了redis,用了Riak/Cassandra 
+redis通常作为辅助的时候用
+
+DB sharding
+
+按照地理位置进行sharding,按照城市进行sharding
+
+
  
  
  
