@@ -1,0 +1,15 @@
+一般QPS》1000，就要考虑分布式系统
+
+thread vs message
+和gmail 一样，都有thread table 
+
+thread table 存什么？
+
+prmary key SQL,need to google
+
+NOSQL:存message table
+NOSQL 适合写比较多的情况
+
+SQL:存thread table 
+每次更新owner_id 有多次，有participants number次，这就是为啥微信群聊不要超过 500人
+
