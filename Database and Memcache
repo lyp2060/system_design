@@ -103,4 +103,83 @@ Memcached: 100k-1m QPS ---》 断电了就没了
  
  
  
+ friendship service
  
+one-way: 
+ from_user_id Foreign_key
+ To_user_id Foreign_key
+ 
+ two way:
+ saved as 2 seperate relations
+ or saved as 1 relations, but need to query twice 
+ 
+ which is better?
+ normally both are ok, however, if need to have transaction operation for db, have to use SQL because NOSQL cannot support it 
+ reason is: NOSQL, those two data, maybe in different machines 
+ 
+ index have to set two, one is from_user_id, to_user_id, 
+ index have to setup in db? (can binary search something, can be faster). use B+ tree in mySQL
+ 
+ what is the diff between tree map and hash implementation? 
+ hash_index cannot support range query, tree index supports range query 
+ 
+ noSQL: have to do serialization and secondary index by user himself
+ 
+ noSQL can do sharding for you, if you need to save your db in serveral machines 
+ 
+
+noSQL: cassandra
+
+canssandra is a 3 layer noSQL db
+1 layer: row_key (hash_key), key-value zhong de key, cannot do range query use this 
+2 layer: column_key, can be sorted, can use range query. can be combined: for eg: timestamp + user_id 
+3 layer: value.  mostly is string, you can do serialization by yourself. 
+
+
+SQL: data is shown as oen row 
+
+NOSQL: data is shown as a grid 
+
+normally newsFeed use NOSQL to store
+
+How to scale? 
+
+except QPS, whatelse we need to considder?
+
+single point Failure?
+ Sharding
+  use some method and make the data in different machine, even if one machine is dead, not 100% web cannot work
+ replica:
+  duplicatd 3 times, sometimes used for reading server
+  
+SQL, doesn't have sharding function 
+NOSQL: has sharding function itself
+
+sharding:
+vertical sharding:
+ user table in one machine (or user table in one machine, user profile table in another machine)
+ friendship table in one machine, message table in one machine
+ 
+horizontal sharding
+ for example, odd/even ID number  (or % number of machines) can be sperated in different machines.
+  issue is the machine number is changing, may need to move a lot of data once adding one more machine (need to use consisten hashing)
+  
+ location based seperation 
+ 
+user table
+put in SQL for most of the companies, (confidence level, mysql used many years, mongoDB is very young, once lost a lot of data in one time)
+use the username, email, phone == a lot of times, SQL can support this operation 
+
+if we sharding user table using userID, DB0, DB1, DB2, then how to support operation like: email == "*gmail"?
+
+can setup a new table to map email to use_id, because the info is very little, can cache all the info
+
+why secondary index cannot work?
+because you need to search all the dbs, very slow 
+
+
+
+
+
+
+
