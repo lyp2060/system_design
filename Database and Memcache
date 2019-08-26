@@ -95,7 +95,7 @@ Memcached: 100k-1m QPS ---》 断电了就没了
  session_table 存在缓存，或者数据库 （--》比较多，但要用cache去优化）
  
  redis： cache thru 
- web server -> cache-->DB
+ web server ->[ cache-->DB]: redis has cache and DB together 
  
  cache aside: 
  web server -> cache
