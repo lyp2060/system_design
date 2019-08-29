@@ -181,5 +181,13 @@ because you need to search all the dbs, very slow
 
 
 
+consistent hashing
+
+non consisten hash: % number of machines
+
+one of hash: % a big number, this big number can be 360
+unbalanced, only 1 or 2 machines need to do migration
+
+replica
 
 
